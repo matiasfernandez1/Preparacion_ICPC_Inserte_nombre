@@ -26,18 +26,43 @@ typedef long long ll;
 #define end cout << "\n";
 
 template <typename... T>
-void read(T&... args) {
+void read(T &... args) {
     ((cin >> args), ...);
 }
 
 template <typename... T>
-void write(T&&... args) {
+void write(T &&... args) {
     ((cout << args << " "), ...);
 }
 
 int main() {
     OJ;
     FIO;
+    int n, k;
+    read(n, k);  //aaaaaaa
+    if (k % 2 == 0) {
+        write(-1);
+        end;
+    } else {
+        if (((k + 1) / 2 - 1) >= n) {
+            write(-1);
+            end;
+            return 0;
+        }
+        int v[n];  //
+        loop(n) {
+            v[i] = i + 1;
+        }
+        loop((k + 1) / 2 - 1) {
+            swap(v[i], v[i + 1]);
+        }
+        loop(n) {
+            write(v[i]);
+        }
+        end;
+    }
 
     return 0;
 }
+
+/* "C_Cpp.clang_format_fallbackStyle": "Visual Studio"
