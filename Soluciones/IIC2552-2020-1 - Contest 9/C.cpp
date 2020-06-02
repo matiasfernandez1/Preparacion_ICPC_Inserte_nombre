@@ -22,48 +22,48 @@ typedef long long ll;
 #define PB push_back
 #define FF first
 #define SS second
-#define what_is(x) cout << #x << " is " << x << "\n";
+#define what_is(x) cerr << #x << " is " << x << "\n";
 #define end cout << "\n";
 
 template <typename... T>
-void read(T &... args) {
+void read(T&... args) {
     ((cin >> args), ...);
 }
 
 template <typename... T>
-void write(T &&... args) {
+void write(T&&... args) {
     ((cout << args << " "), ...);
 }
-int v[100000];
-int k;
-void merge_(int l, int r) {
-    if (r - l == 1 or k <= 1)
-        return;
-    else {
-        int m = (l + r) / 2;
-        k -= 2;
-        swap(v[m - 1], v[m]);
-        merge_(l, m);
-        merge_(m, r);
+
+vector<ll> a;
+ll brochazo(ll l, ll r, ll H) {
+    ll hmin = 1e9 + 1;
+    ll i;
+    REP(i, l, r) {
+        hmin = min(hmin, a[i]);
     }
+    ll sol = hmin - H;
+    ll l1 = l;
+    REP(i, l, r) {
+        if (a[i] == hmin) {
+            sol += brochazo(l1, i - 1, hmin);
+            l1 = i + 1;
+        }
+    }
+    if (l1 != r + 1) sol += brochazo(l1, r, hmin);
+
+    return min(sol, (r - l + 1));
 }
 
 int main() {
     // OJ;
     FIO;
-    int n;
-    read(n, k);  //aaaaaaa
-    if (k % 2 == 0 or k >= 2 * n) {
-        write(-1);
-        end;
-    } else {
-        loop(n) {
-            v[i] = i + 1;
-        }
-        merge_(0, n);
-        loop(n) write(v[i]);
-        end;
-    }
+    ll n;
+    read(n);
+    a.resize(n);
+    loop(n) read(a[i]);
+    write(brochazo(0, n - 1, 0));
+    end;
 
     return 0;
 }
